@@ -147,7 +147,7 @@ def _get_normed_sym_tf(X_, batch_size):
         symmetric probabilities, making the assumption that P(i|j) = P(j|i)
         Diagonals are all 0s."""
     toset = tf.constant(0, shape=[batch_size], dtype=X_.dtype)
-    X_ = tf.matrix_set_diag(X_, toset)
+    X_ = tf.linalg_set_diag(X_, toset)
     norm_facs = tf.reduce_sum(X_, axis=0, keep_dims=True)
     X_ = X_ / norm_facs
     X_ = 0.5*(X_ + tf.transpose(X_))
@@ -218,7 +218,7 @@ def kl_loss(y_true, y_pred, alpha=1.0, batch_size=None, num_perplexities=None, _
         #cur_beta_P = P_
         kl_matr = tf.multiply(cur_beta_P, tf.log(cur_beta_P + _tf_eps) - tf.log(Q_ + _tf_eps), name='kl_matr')
         toset = tf.constant(0, shape=[batch_size], dtype=kl_matr.dtype)
-        kl_matr_keep = tf.matrix_set_diag(kl_matr, toset)
+        kl_matr_keep = tf.linalg_set_diag(kl_matr, toset)
         kl_total_cost_cur_beta = tf.reduce_sum(kl_matr_keep)
         kls_per_beta.append(kl_total_cost_cur_beta)
     kl_total_cost = tf.add_n(kls_per_beta)
