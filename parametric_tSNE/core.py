@@ -18,8 +18,8 @@ import functools
 import numpy as np
 
 import tensorflow as tf
-from tensorflow.contrib.keras import models
-from tensorflow.contrib.keras import layers
+from tensorflow.keras import models
+from tensorflow.keras import layers
 
 from .utils import calc_betas_loop
 from .utils import get_squared_cross_diff_np
@@ -272,7 +272,7 @@ class Parametric_tSNE(object):
         self.do_pretrain = do_pretrain
         self._loss_func = None
         
-        tf.set_random_seed(seed)
+        tf.random.set_seed(seed)
         np.random.seed(seed)
         
         # If no layers provided, use the same architecture as van der maaten 2009 paper
