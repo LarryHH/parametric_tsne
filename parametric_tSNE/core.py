@@ -147,7 +147,7 @@ def _get_normed_sym_tf(X_, batch_size):
         symmetric probabilities, making the assumption that P(i|j) = P(j|i)
         Diagonals are all 0s."""
     toset = tf.constant(0, shape=[batch_size], dtype=X_.dtype)
-    X_ = tf.linalg_set_diag(X_, toset)
+    X_ = tf.linalg.set_diag(X_, toset)
     norm_facs = tf.reduce_sum(X_, axis=0, keep_dims=True)
     X_ = X_ / norm_facs
     X_ = 0.5*(X_ + tf.transpose(X_))
